@@ -1,0 +1,16 @@
+---
+test:
+  primary:
+    :adapter: postgresql
+    :encoding: unicode
+    :database: postgres
+    :username: postgres
+    :password: ''
+    :host: postgres
+  primary_shard_one:
+    :adapter: postgresql
+    :encoding: unicode
+    :database: postgres_shard
+    :username: postgres
+    :password: ''
+    :host: postgres

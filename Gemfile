@@ -1,0 +1,7 @@
+# Gemfile
+
+source 'https://rubygems.org'
+
+gem 'rails', '~> 7.2'
+gem 'pg'
+gem 'minitest'
