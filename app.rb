@@ -27,8 +27,8 @@ class CustomerTest < Minitest::Test
     end
 
     # Clean storage folder before each test
-    FileUtils.rm_rf(ActiveStorage::Blob.service.root)
-    FileUtils.mkdir_p(ActiveStorage::Blob.service.root)
+    # FileUtils.rm_rf(ActiveStorage::Blob.service.root)
+    # FileUtils.mkdir_p(ActiveStorage::Blob.service.root)
   end
 
   def test_normal_shard_and_file_existence
