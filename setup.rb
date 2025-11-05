@@ -167,11 +167,37 @@ class CreateActiveStorageTables < ActiveRecord::Migration[7.2]
   end
 end
 
+module StoragePathable
+  extend ActiveSupport::Concern
+
+  included do
+    before_create :assign_subdomain_to_attachments
+
+    def assign_subdomain_to_attachments
+      self.class.reflect_on_all_attachments.each do |reflection|
+        attachment = public_send(reflection.name)
+        next unless attachment.attached?
+
+        original_key = attachment.blob.key
+        # Get prefix - hardcoded for this example
+        prefix = [['tenant_a', 'tenant_b', 'tenant_c'].sample, self.class.name.underscore.pluralize].compact.join('/')
+
+        unless original_key.start_with?(prefix)
+          new_key = "#{prefix}/#{original_key}"
+          attachment.blob.key = new_key
+        end
+      end
+    end
+  end
+end
+
 # Models
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
 end
 
 class Product < ApplicationRecord
+  include StoragePathable
+
   has_one_attached :file
 end

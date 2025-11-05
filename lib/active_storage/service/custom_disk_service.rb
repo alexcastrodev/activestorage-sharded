@@ -4,11 +4,8 @@ module ActiveStorage
   class Service
     class CustomDiskService < DiskService
         def path_for(key)
-          # figure out i changed the key before to : random/shard/<actual_key>
-          key = "random/shard/#{key}"
-
-          actual_key = key.split('/', 3).last
-          prefix = "default/products"
+          tenant, model, actual_key = key.split('/', 3)
+          prefix = "#{tenant}/#{model}"
 
           if actual_key
             # Sharding is the official way of path_for in ActiveStorage (disk_service)
