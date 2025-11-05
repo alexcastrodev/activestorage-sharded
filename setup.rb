@@ -18,7 +18,7 @@ require 'rails'
 require 'active_storage/engine'
 
 # Load custom service
-require_relative 'lib/active_storage/service/sharded_disk_service'
+require_relative 'lib/active_storage/service/custom_disk_service'
 
 # Create a minimal Rails application
 class TestApp < Rails::Application
@@ -30,7 +30,7 @@ class TestApp < Rails::Application
   config.active_storage.service = :test
   config.active_storage.service_configurations = {
     test: {
-      service: "ShardedDisk",
+      service: "CustomDisk",
       root: "./tmp/storage"
     }
   }

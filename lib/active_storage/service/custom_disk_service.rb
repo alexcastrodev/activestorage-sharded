@@ -2,7 +2,7 @@ require 'active_storage/service/disk_service'
 
 module ActiveStorage
   class Service
-    class ShardedDiskService < DiskService
+    class CustomDiskService < DiskService
         def path_for(key)
           # figure out i changed the key before to : random/shard/<actual_key>
           key = "random/shard/#{key}"
