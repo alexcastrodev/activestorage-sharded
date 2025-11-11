@@ -1,0 +1,39 @@
+name: Test Ruby Syntax Compatibility
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  test-ruby-syntax:
+    name: Test with Ruby ${{ matrix.ruby }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby:
+          - '3.3.0'
+          - '3.4.1'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby ${{ matrix.ruby }}
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: false
+
+      - name: Display Ruby version
+        run: |
+          echo "Ruby version:"
+          ruby -v
+          echo ""
+
+      - name: Run syntax test
+        id: syntax_test
+        continue-on-error: true
+        run: ruby test.rb
